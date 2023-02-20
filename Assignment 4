@@ -1,0 +1,32 @@
+
+#1
+makeblastdb -in mystery_transcripts.fasta -dbtype nucl -out mystery_transcripts
+
+#2
+makeblastdb -in mystery_proteins.fasta -dbtype prot -out mystery_proteins
+
+#3
+blastn -query mystery_nucleotide_query.fasta -task megablast -db mystery_transcripts -out mystery_transcript_blast.txt -evalue 1e-3 -max_hsps 5 -outfmt 7
+
+#4
+Most similar hit:
+T010027234997, 91.965% identity 
+
+#5
+awk '$3 > 90' mystery_transcript_blast.txt >> most_similar.txt
+
+#6
+blastp -query mystery_protein_query.fasta -db mystery_proteins -out mystery_protein_blast.txt -evalue 1e-3 -max_hsps 15 -outfmt 7 
+
+#7
+Most similar hit: 
+P010027090796, 87.805% identity 
+
+#8
+The species of the mystery_transcripts.fasta file is coffea arabica
+
+#9
+The species of the mystery query is Gardenia jasminoides 
+
+#10
+THe mystery gene encodes putative catalase 
